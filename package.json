@@ -1,0 +1,26 @@
+{
+  "name": "offer-scroller-widget",
+  "version": "1.0.0",
+  "description": "Lightweight, dependency-free Top Offer Scroller Web Component",
+  "type": "module",
+  "main": "dist/offer-scroller.min.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "serve": "npx serve ."
+  },
+  "keywords": [
+    "web-component",
+    "custom-element",
+    "offer-scroller",
+    "announcement-bar",
+    "shadow-dom"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.9.0",
+    "rollup-plugin-postcss": "^4.0.2"
+  }
+}

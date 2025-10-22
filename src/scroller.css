@@ -1,0 +1,288 @@
+/**
+ * Top Offer Scroller - Shadow DOM Styles
+ * Fully encapsulated styles with CSS custom properties for theming
+ */
+
+:host {
+  /* CSS Custom Properties for theming */
+  --scroller-bg: #111;
+  --scroller-color: #fff;
+  --scroller-height: auto;
+  --scroller-padding: 12px 0;
+  --scroller-font-size: 14px;
+  --scroller-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --scroller-font-weight: 500;
+  --scroller-font-style: normal;
+  --scroller-letter-spacing: 0.02em;
+  --scroller-text-transform: none;
+  --scroller-text-decoration: none;
+  --scroller-link-gap: 48px;
+  --scroller-close-size: 24px;
+  --scroller-z-index: 9999;
+  --scroller-slide-duration: 3s;
+  --scroller-fade-duration: 0.5s;
+  
+  display: block;
+  position: relative;
+  width: 100%;
+  z-index: var(--scroller-z-index);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+/* Placement modifiers */
+:host([data-placement="top"]) {
+  position: sticky;
+  top: 0;
+}
+
+:host([data-placement="bottom"]) {
+  position: sticky;
+  bottom: 0;
+}
+
+.scroller-container {
+  background-color: var(--scroller-bg);
+  color: var(--scroller-color);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  font-family: var(--scroller-font-family);
+  font-size: var(--scroller-font-size);
+  line-height: 1.5;
+}
+
+.scroller-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--scroller-padding);
+  position: relative;
+}
+
+.scroller-track {
+  display: flex;
+  align-items: center;
+  gap: var(--scroller-link-gap);
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* Scroll animation (default) */
+.scroller-track.animation-scroll {
+  animation: scroll-left var(--scroll-duration, 20s) linear infinite;
+}
+
+/* Slide animation (one by one) */
+.scroller-track.animation-slide {
+  position: relative;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.scroller-track.animation-slide .scroller-item {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity var(--scroller-fade-duration) ease-in-out;
+}
+
+.scroller-track.animation-slide .scroller-item.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Fade animation */
+.scroller-track.animation-fade {
+  position: relative;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.scroller-track.animation-fade .scroller-item {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity var(--scroller-fade-duration) ease-in-out;
+}
+
+.scroller-track.animation-fade .scroller-item.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Pause animation on hover (scroll mode only) */
+.scroller-track.animation-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Disable pause on hover if specified */
+.scroller-track.no-pause-on-hover.animation-scroll:hover {
+  animation-play-state: running;
+}
+
+/* Pause animation for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .scroller-track.animation-scroll {
+    animation: none !important;
+  }
+  
+  .scroller-track.animation-slide .scroller-item,
+  .scroller-track.animation-fade .scroller-item {
+    transition: none !important;
+  }
+}
+
+/* Pause when focused for accessibility */
+.scroller-track.animation-scroll:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroller-item {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.scroller-link {
+  color: inherit;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+  display: inline-block;
+  min-height: 44px; /* Accessible tap target */
+  display: flex;
+  align-items: center;
+}
+
+.scroller-link:hover,
+.scroller-link:focus {
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Disable hover border if specified */
+.scroller-track.no-hover-border .scroller-link:hover,
+.scroller-track.no-hover-border .scroller-link:focus {
+  outline: none;
+  background-color: transparent;
+}
+
+/* Show underline on hover if enabled */
+.scroller-track.show-link-underline .scroller-link:hover,
+.scroller-track.show-link-underline .scroller-link:focus {
+  text-decoration: underline;
+}
+
+.scroller-track.show-link-underline .scroller-text {
+  text-decoration: inherit;
+}
+
+/* Always show underline on links (only if they have href) */
+.scroller-track.always-show-underline .scroller-link[href]:not([href="#"]):not([href=""]) {
+  text-decoration: underline;
+}
+
+.scroller-track.always-show-underline .scroller-link[href]:not([href="#"]):not([href=""]) .scroller-text {
+  text-decoration: inherit;
+}
+
+.scroller-link:focus {
+  outline-style: solid;
+}
+
+.scroller-text {
+  display: inline-block;
+  font-weight: var(--scroller-font-weight);
+  font-style: var(--scroller-font-style);
+  letter-spacing: var(--scroller-letter-spacing);
+  text-transform: var(--scroller-text-transform);
+  text-decoration: var(--scroller-text-decoration);
+}
+
+/* Close button */
+.scroller-close {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 8px;
+  width: var(--scroller-close-size);
+  height: var(--scroller-close-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  z-index: 10;
+  min-width: 44px; /* Accessible tap target */
+  min-height: 44px;
+}
+
+.scroller-close:hover,
+.scroller-close:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.scroller-close:focus {
+  outline-style: solid;
+}
+
+.scroller-close svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :host {
+    --scroller-font-size: 13px;
+    --scroller-link-gap: 32px;
+    --scroller-padding: 10px 0;
+  }
+  
+  .scroller-close {
+    right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    --scroller-font-size: 12px;
+    --scroller-link-gap: 24px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .scroller-link:focus,
+  .scroller-close:focus {
+    outline-width: 3px;
+  }
+}
