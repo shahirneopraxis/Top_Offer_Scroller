@@ -193,15 +193,75 @@
   </style>
 </head>
 <body>
-  <!-- Example 1: Top placement with slide animation and custom typography -->
+  <!-- 
+    Example 1: Top placement with slide animation and custom typography
+    
+    ATTRIBUTE OPTIONS:
+    - data-items: Array of offer items. Each item can have:
+        * text (required): The message text
+        * link (optional): URL to link to
+        * target (optional): "_blank", "_self", "_parent", "_top"
+        * html (optional): true/false - whether to render HTML in text
+    
+    - data-animation: Animation type
+        * "scroll" - continuous scrolling
+        * "slide" - slide between items
+    
+    - data-slide-duration: Duration in milliseconds for slide animation
+        * Only applies when data-animation="slide"
+        * Example: "3000" for 3 seconds
+    
+    - data-bg: Background color
+        * Any valid CSS color: hex (#0b76ff), rgb, rgba, named colors, gradients
+    
+    - data-color: Text color
+        * Any valid CSS color: hex, rgb, rgba, named colors
+    
+    - data-closeable: Show close button
+        * "true" or "false"
+    
+    - data-placement: Position on page
+        * "top" or "bottom"
+    
+    - data-font-family: Font family
+        * Any valid CSS font-family value
+    
+    - data-font-size: Font size
+        * Any valid CSS font-size value (px, em, rem, %, etc.)
+    
+    - data-font-weight: Font weight
+        * CSS font-weight values: 100, 200, 300, 400, 500, 600, 700, 800, 900
+        * Or: "normal", "bold", "lighter", "bolder"
+    
+    - data-letter-spacing: Letter spacing
+        * Any valid CSS letter-spacing value (px, em, rem, etc.)
+    
+    - data-pause-on-hover: Pause animation on hover
+        * "true" or "false"
+    
+    - data-show-link-underline: Show underline on links when hovering
+        * "true" or "false"
+    
+    - data-show-hover-border: Show border on hover
+        * "true" or "false"
+    
+    - data-always-show-underline: Always show underline on links (not just on hover)
+        * "true" or "false"
+    
+    - data-height: Custom height for the bar
+        * Any valid CSS height value (px, em, rem, vh, %, etc.)
+        * Examples: "50px", "3rem", "10vh"
+        * Leave empty for auto height based on content
+  -->
   <offer-scroller
     data-items='[
       {"text":"🎉 Free shipping on orders over $50","link":"/collections/sale"},
       {"text":"💰 20% off with code SAVE20"},
       {"text":"🚀 New arrivals just dropped!","link":"/collections/new"},
-      {"text":"🚀 New arrivals! <a href=\"/new\" style=\"text-decoration:underline;color:inherit;\">click here</a>","html":true}
+      {"text":"🚀 New arrivals! <a href=\"/new\" style=\"text-decoration:underline;color:inherit;\">click here </a>","html":true}
     ]'
     data-animation="slide"
+    data-speed="100"
     data-slide-duration="3000"
     data-bg="#0b76ff"
     data-color="#ffffff"
@@ -215,6 +275,7 @@
     data-show-link-underline="true"
     data-show-hover-border="false"
     data-always-show-underline="true"
+    data-height="40px"
   ></offer-scroller>
 
   <div class="demo-header">
@@ -455,6 +516,12 @@
             <td style="padding: 12px; border: 1px solid #cbd5e0;">""</td>
             <td style="padding: 12px; border: 1px solid #cbd5e0;">Custom class for theming hooks</td>
           </tr>
+          <tr>
+            <td style="padding: 12px; border: 1px solid #cbd5e0;"><code>data-height</code></td>
+            <td style="padding: 12px; border: 1px solid #cbd5e0;">CSS Value</td>
+            <td style="padding: 12px; border: 1px solid #cbd5e0;">auto</td>
+            <td style="padding: 12px; border: 1px solid #cbd5e0;">Custom height (e.g., "50px", "3rem", "10vh")</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -594,7 +661,7 @@ scroller.addEventListener('offer-scroller:hidden', (e) => {
   ></offer-scroller>
 
   <!-- Load the widget (for demo, using local build) -->
-  <script src="dist/offer-scroller.min.js"></script>
+  <script src="./dist/offer-scroller.min.js"></script>
 
   <!-- Demo JavaScript -->
   <script>

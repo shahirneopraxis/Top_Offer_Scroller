@@ -39,6 +39,7 @@ const DEFAULTS = {
   showLinkUnderline: false, // show underline on link hover
   showHoverBorder: true, // show border/outline on link hover
   alwaysShowUnderline: false, // always show underline on links
+  height: '', // custom height for the bar
 };
 
 /**
@@ -174,6 +175,7 @@ class OfferScroller extends HTMLElement {
       'data-show-link-underline',
       'data-show-hover-border',
       'data-always-show-underline',
+      'data-height',
     ];
   }
 
@@ -322,6 +324,9 @@ class OfferScroller extends HTMLElement {
     
     const alwaysShowUnderline = this.getAttribute('data-always-show-underline');
     this._config.alwaysShowUnderline = alwaysShowUnderline === 'true' ? true : DEFAULTS.alwaysShowUnderline;
+    
+    // Parse height
+    this._config.height = this.getAttribute('data-height') || DEFAULTS.height;
   }
 
   /**
@@ -333,7 +338,8 @@ class OfferScroller extends HTMLElement {
       items, bg, color, closeable, ariaLabel, customClass,
       fontFamily, fontSize, fontWeight, fontStyle, 
       letterSpacing, textTransform, textDecoration,
-      pauseOnHover, showLinkUnderline, showHoverBorder, alwaysShowUnderline
+      pauseOnHover, showLinkUnderline, showHoverBorder, alwaysShowUnderline,
+      height
     } = this._config;
     
     // Clear shadow root
@@ -358,6 +364,9 @@ class OfferScroller extends HTMLElement {
     if (letterSpacing) container.style.setProperty('--scroller-letter-spacing', letterSpacing);
     if (textTransform) container.style.setProperty('--scroller-text-transform', textTransform);
     if (textDecoration) container.style.setProperty('--scroller-text-decoration', textDecoration);
+    
+    // Apply height if provided
+    if (height) container.style.setProperty('--scroller-height', height);
     
     container.setAttribute('role', 'region');
     container.setAttribute('aria-label', ariaLabel);

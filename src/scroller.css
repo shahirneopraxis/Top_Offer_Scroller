@@ -49,17 +49,21 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+  height: var(--scroller-height);
   font-family: var(--scroller-font-family);
   font-size: var(--scroller-font-size);
   line-height: 1.5;
+  display: flex;
+  align-items: center;
 }
 
 .scroller-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--scroller-padding);
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .scroller-track {
@@ -68,6 +72,7 @@
   gap: var(--scroller-link-gap);
   white-space: nowrap;
   will-change: transform;
+  height: 100%;
 }
 
 /* Scroll animation (default) */
@@ -79,40 +84,60 @@
 .scroller-track.animation-slide {
   position: relative;
   justify-content: center;
-  min-height: 44px;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .scroller-track.animation-slide .scroller-item {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
-  transition: opacity var(--scroller-fade-duration) ease-in-out;
+  transition: transform 0.5s ease-in-out, 
+              opacity 0.5s ease-in-out;
+  pointer-events: none;
 }
 
 .scroller-track.animation-slide .scroller-item.active {
+  transform: translateY(-50%) translateX(0);
   opacity: 1;
   z-index: 1;
+  pointer-events: auto;
 }
 
 /* Fade animation */
 .scroller-track.animation-fade {
   position: relative;
   justify-content: center;
-  min-height: 44px;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .scroller-track.animation-fade .scroller-item {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
-  transition: opacity var(--scroller-fade-duration) ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
 }
 
 .scroller-track.animation-fade .scroller-item.active {
   opacity: 1;
   z-index: 1;
+  pointer-events: auto;
 }
 
 /* Pause animation on hover (scroll mode only) */
@@ -163,8 +188,6 @@
   padding: 8px 12px;
   border-radius: 4px;
   transition: opacity 0.2s ease, background-color 0.2s ease;
-  display: inline-block;
-  min-height: 44px; /* Accessible tap target */
   display: flex;
   align-items: center;
 }
