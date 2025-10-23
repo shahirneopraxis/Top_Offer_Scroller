@@ -21,6 +21,7 @@ const DEFAULTS = {
   items: [{ text: 'Welcome! Check out our latest offers.', link: '#' }],
   speed: 12,
   placement: 'top',
+  sticky: true, // sticky positioning
   bg: '#111',
   color: '#fff',
   closeable: false,
@@ -156,6 +157,7 @@ class OfferScroller extends HTMLElement {
       'data-items',
       'data-speed',
       'data-placement',
+      'data-sticky',
       'data-bg',
       'data-color',
       'data-closeable',

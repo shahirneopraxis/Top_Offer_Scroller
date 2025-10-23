@@ -18,7 +18,7 @@
   --scroller-text-decoration: none;
   --scroller-link-gap: 48px;
   --scroller-close-size: 24px;
-  --scroller-z-index: 9999;
+  --scroller-z-index: 99999;
   --scroller-slide-duration: 3s;
   --scroller-fade-duration: 0.5s;
   
@@ -32,15 +32,28 @@
   display: none;
 }
 
-/* Placement modifiers */
+/* Placement modifiers - use fixed for better compatibility */
 :host([data-placement="top"]) {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
 }
 
 :host([data-placement="bottom"]) {
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Disable sticky/fixed if data-sticky="false" */
+:host([data-sticky="false"]) {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
 }
 
 .scroller-container {
